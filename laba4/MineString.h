@@ -7,11 +7,11 @@ private:
     char *str;
     int length;
 public:
-    MineString(char*);
+    MineString(const char*);
     MineString(const MineString &M);
     ~MineString();
-    void concat(char*);
-    void copy(char*, char*, int, int);
+    void concat(const char*);
+    void copy(char*, const char*, int, int);
     int lenStrWhile(const char* m) {
         int length = 0;
         while (*m)
@@ -28,19 +28,18 @@ public:
         return length;
     }
 };
-MineString::MineString(char* ch)
+MineString::MineString(const char* ch)
 {
     length=lenStrWhile(ch);
     str = new char[length];
     copy(str, ch, length, 0);
 }
 MineString::MineString(const MineString &M) {
-    //length=M.length;
     length=M.getLen();
     str = new char[length];
     copy(str, M.getMineStr(), length, 0);
 }
-void MineString::concat(char* ch2) {
+void MineString::concat(const char* ch2) {
     int x=lenStrWhile(ch2), y = x+length;
     char *str2 = new char[y];
     copy(str2, str, length, 0);
@@ -49,7 +48,7 @@ void MineString::concat(char* ch2) {
     str = str2;
     length = y;
 }
-void MineString::copy(char *dest, char *src, int len, int indx) {
+void MineString::copy(char *dest, char const *src, int len, int indx) {
     int i=0, len1 = len+indx;
     while (indx<len1)
     {
