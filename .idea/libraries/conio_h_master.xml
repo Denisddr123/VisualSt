@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="conio.h-master">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/conio.h-master.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
