@@ -1,19 +1,14 @@
 #include <stdio.h>
-#include "../laba4/MineString.h"
+#include "MineString.h"
 int main() {
     int searchString(FILE*, MineString mineString);
     char name[50]= "sources.list", array[100]="after the final release";
     FILE *in;
     printf("Введите имя файла для просмотра: ");
     cin.getline(name, 50);
-    //scanf("%s", name);
 
     printf("Найти подстроку: ");
-    //scanf("%s", array);
-    
     cin.getline(array, 100);
-    //printf("Длина строки %s \n", &array[0]);
-    //MineString *mineString = new MineString(array);
 
     MineString mineString(array);
 
@@ -26,11 +21,11 @@ int main() {
 
 int searchString(FILE *in, MineString mineString) {
     char ch, *arr=mineString.getMineStr();
-    //printf("Файл %s ", arr);
     int j=0, lenght = mineString.getLen(), i, pos=-1;
+    
     while ((ch = getc(in)) != EOF)
         {
-            putchar(ch);
+            printf("%c", ch);
             if (j==lenght)
                 {
                     pos=(i-j);
@@ -45,7 +40,7 @@ int searchString(FILE *in, MineString mineString) {
                 } else {
                     i=ftell(in);
                     j++;
-                } 
+                }
         }
     return pos;
 }
