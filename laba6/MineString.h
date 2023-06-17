@@ -16,9 +16,14 @@ public:
     MineString& copy(const char*);
     MineString& copy(const MineString&);
     MineString& concat(const char*);
+    void printStr();
+    void setStr();
     MineString& operator=(const MineString&);
     MineString& operator+(const MineString&);
     int operator==(const MineString&);
+    MineString& operator=(const char*);
+    MineString& operator+(const char*);
+    int operator==(const char*);
     int lenStrWhile(const char* m) const {
         int lengths = 0;
         while (*m)
@@ -94,14 +99,31 @@ MineString& MineString::copy(const MineString& m) {
     //str[len]='\0';
     return *this;
 }
+void MineString::printStr() {
+    std::cout<<str<<endl;
+}
+void MineString::setStr() {
+    char ch[100];
+    std::cin.getline(ch, 100);
+    MineString::copy(ch);
+}
 MineString& MineString::operator=(const MineString& m) {
     return MineString::copy(m);
+}
+MineString& MineString::operator=(const char* ch) {
+    return MineString::copy(ch);
 }
 int MineString::operator==(const MineString& m) {
     return MineString::strCmp(m.getMineStr());
 }
+int MineString::operator==(const char* ch) {
+    return MineString::strCmp(ch);
+}
 MineString& MineString::operator+(const MineString& m) {
     return MineString::concat(m.getMineStr());
+}
+MineString& MineString::operator+(const char* ch) {
+    return MineString::concat(ch);
 }
 int MineString::strCmp(const char *str1, const char *str2) const {
     int z=0;
