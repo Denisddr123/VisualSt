@@ -37,7 +37,7 @@ void g(char* ch1, char* ch2) {
     copyNewStr(str1, ch1, x);
     copyNewStr(str2, ch2, y);
 
-    cout<<str1<<"\t\t\t\t Первая строка"<<endl;
+    cout<<str1<<"\t Первая строка"<<endl;
     cout<<str2<<"\t Вторая строка"<<endl;
     i = lenStrEnglish(str1);
     cout<<i<<"\t\t Длина первой строки"<<endl;
@@ -54,6 +54,9 @@ void g(char* ch1, char* ch2) {
 
     cout<<"Копирование второй строки в первую, своя функция."<<endl;
     copyStr(str1, str2);
+    cout<<str1<<"\t\t\t\t Первая строка после изменения"<<endl;
+    cout<<str2<<"\t Вторая строка после изменения"<<endl;
+    copyStr(str1, "test");
     cout<<str1<<"\t\t\t\t Первая строка после изменения"<<endl;
     cout<<str2<<"\t Вторая строка после изменения"<<endl;
 
