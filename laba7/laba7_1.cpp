@@ -3,6 +3,6 @@ int main()
 {
     sf::Window window(
         sf::VideoMode(640, 480),
-        "Hello World");
+        "Hello World!");
     return 0;
 };
