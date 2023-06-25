@@ -6,18 +6,22 @@ class MineString
 private:
     char *str;
     char * (MineString::*f) (int);
+    void (MineString::*del) ();
     int length;
     void copy(char*, const char*, int, int);
 public:
     MineString(const char*);
     MineString(const MineString &M);
     MineString(const MineString *M);
+    MineString(const char*, bool);
+    MineString(const MineString &M, bool);
+    MineString(const MineString *M, bool);
     ~MineString();
+    void highlightMemoryInStyleC(bool);
     int strCmp(const char*, const char*) const;
     int strCmp(const char*) const;
     MineString& copy(const char*);
     MineString& copy(const MineString&);
-    //MineString* copy(const MineString*);
     MineString& concat(const char*);
     void printStr();
     void setStr();
@@ -45,34 +49,84 @@ public:
     char * newMem(int x) {
         return new char[x];
     }
+    char * newMemInStyleC(int x) {
+        return (char*)malloc(x);
+    }
+    void delNewMem() {
+        delete [] str;
+    }
+    void delNewMemInStyleC() {
+        free(str);
+    }
 };
 MineString::MineString(const char* ch)
 {
-    length=lenStrWhile(ch);
     f=&MineString::newMem;
+    del = &MineString::delNewMem;
+    length=lenStrWhile(ch);
     str = (this->*f)(length+1);
 
     copy(str, ch, length, 0);
     str[length] = '\0';
 }
 MineString::MineString(const MineString &M) {
+    f=&MineString::newMem;
+    del = &MineString::delNewMem;
     length=M.getLen();
-    str = new char[length];
+    str = (this->*f)(length+1);
     copy(str, M.getMineStr(), length, 0);
+    str[length] = '\0';
 }
 MineString::MineString(const MineString *M) {
+    f=&MineString::newMem;
+    del = &MineString::delNewMem;
     length=M->getLen();
-    str = new char[length];
+    str = (this->*f)(length+1);
     copy(str, M->getMineStr(), length, 0);
+    str[length] = '\0';
+}
+
+MineString::MineString(const char* ch, bool b)
+{
+    highlightMemoryInStyleC(b);
+    length=lenStrWhile(ch);
+    str = (this->*f)(length+1);
+    copy(str, ch, length, 0);
+    str[length] = '\0';
+}
+MineString::MineString(const MineString &M, bool b) {
+    highlightMemoryInStyleC(b);
+    length=M.getLen();
+    str = (this->*f)(length+1);
+    copy(str, M.getMineStr(), length, 0);
+    str[length] = '\0';
+}
+MineString::MineString(const MineString *M, bool b) {
+    highlightMemoryInStyleC(b);
+    length=M->getLen();
+    str = (this->*f)(length+1);
+    copy(str, M->getMineStr(), length, 0);
+    str[length] = '\0';
+}
+
+void MineString::highlightMemoryInStyleC(bool b) {
+    if (b)
+    {
+        f=&MineString::newMemInStyleC;
+        del = &MineString::delNewMemInStyleC;
+    } else {
+        f=&MineString::newMem;
+        del = &MineString::delNewMem;
+    }
+    
 }
 MineString& MineString::concat(const char *ch2) {
     int x=lenStrWhile(ch2), y = x+length;
-    char *str2 = newMem(y+1);
+    char *str2 = (this->*f)(y+1);
     copy(str2, str, length, 0);
     copy(str2, ch2, x, length);
     str2[y] = '\0';
-    MineString::~MineString();
-    //delete [] str;
+    (this->*del)();
     str = str2;
     length = y;
     return *this;
@@ -88,10 +142,8 @@ void MineString::copy(char *dest, const char *src, int len, int indx) {
 }
 MineString& MineString::copy(const char *src) {
     int i=0, len = lenStrWhile(src);
-    MineString::~MineString();
-    //delete [] str;
-    //str = new char[len+1];
-    str = newMem(len+1);
+    (this->*del)();
+    str = (this->*f)(len+1);
     while (i<len)
     {
         str[i]=src[i];
@@ -164,5 +216,5 @@ int MineString::strCmp(const char *str2) const {
 
 MineString::~MineString()
 {
-    delete [] str;
+    (this->*del)();
 }

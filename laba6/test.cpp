@@ -91,4 +91,7 @@ int main() {
     std::cout<<mi.getMineStr()<<endl;
 
     delete(m);
+    m = new MineString("Home work", true);
+    std::cout<<m->getMineStr()<<endl;
+    delete(m);
 }
