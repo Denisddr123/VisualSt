@@ -6,7 +6,7 @@ int main() {
     scanf("%s", name);
 
     if ((in = fopen(name, "r")) == NULL)
-        printf("Файл %s не открыт", name);
+        printf("Файл %s не открыт!", name);
     else
         while (!feof(in))
         {   
